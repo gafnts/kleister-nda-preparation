@@ -28,3 +28,10 @@ repos:
         language: system
         types: [python]
         pass_filenames: false
+
+      - id: pytest
+        name: pytest
+        language: system
+        types: [python]
+        entry: uv run pytest --cov --cov-report=xml -v
+        pass_filenames: false
