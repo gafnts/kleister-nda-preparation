@@ -1,7 +1,7 @@
 # Kleister NDA: Dataset Preprocessing for LLM-based KIE
 
 [![CI](https://github.com/gafnts/kleister-nda-preprocessing/actions/workflows/ci.yaml/badge.svg)](https://github.com/gafnts/kleister-nda-preprocessing/actions/workflows/ci.yaml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 A Python preprocessing layer for the [Kleister NDA](https://github.com/applicaai/kleister-nda) dataset, designed to prepare data for multimodal Key Information Extraction (KIE) tasks using large language models in a serverless processing context.
 
