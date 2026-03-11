@@ -1,5 +1,5 @@
 """
-Tests for labels.py
+Tests for label_transformer.py
 (sort_label_fields, parse_label_to_schema, label_schema_to_string, transform)
 """
 
