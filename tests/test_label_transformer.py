@@ -15,8 +15,6 @@ from nda.label_transformer import (
     transform,
 )
 
-# ── sort_label_fields ────────────────────────────────────────────────
-
 
 class TestSortLabelFields:
     def test_already_canonical_order_unchanged(self) -> None:
@@ -50,9 +48,6 @@ class TestSortLabelFields:
 
     def test_empty_string_returns_empty(self) -> None:
         assert sort_label_fields("") == ""
-
-
-# ── parse_label_to_schema ────────────────────────────────────────────
 
 
 class TestParseLabelToSchema:
@@ -93,9 +88,6 @@ class TestParseLabelToSchema:
     def test_returns_dict_not_model(self) -> None:
         result = parse_label_to_schema("term=1_year")
         assert isinstance(result, dict)
-
-
-# ── label_schema_to_string ───────────────────────────────────────────
 
 
 class TestLabelSchemaToString:
@@ -140,9 +132,6 @@ class TestLabelSchemaToString:
         assert result == "jurisdiction=California party=Acme term=1_year"
 
 
-# ── round-trip property ──────────────────────────────────────────────
-
-
 class TestRoundTrip:
     @pytest.mark.parametrize(
         "raw",
@@ -165,9 +154,6 @@ class TestRoundTrip:
         schema = parse_label_to_schema(canonical)
         serialized = label_schema_to_string(schema)
         assert "decoy" not in serialized
-
-
-# ── transform ────────────────────────────────────────────────────────
 
 
 class TestTransform:
