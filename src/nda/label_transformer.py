@@ -42,9 +42,8 @@ def sort_label_fields(string: str) -> str:
 
     pairs: list[tuple[str, str]] = []
     for part in string.strip().split():
-        if "=" in part:
-            key, value = part.split("=", 1)
-            pairs.append((key, value))
+        key, value = part.split("=", 1)
+        pairs.append((key, value))
 
     grouped: dict[str, list[str]] = {k: [] for k in schema_order}
     others: list[str] = []
@@ -99,9 +98,7 @@ def label_schema_to_string(nda_dict: dict[str, Any]) -> str:
             parts.append(f"{key}={value}")
 
     for party in nda_dict.get("party", []):
-        name = party.get("name")
-        if name is not None:
-            parts.append(f"party={name}")
+        parts.append(f"party={party['name']}")
 
     term = nda_dict.get("term")
     if term is not None:
