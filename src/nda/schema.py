@@ -66,7 +66,7 @@ class NDA(BaseModel):
     def validate_term_format(cls, v: str | None) -> str | None:
         if v is None:
             return v
-        if not re.fullmatch(r"\d+_\w+", v):
+        if not re.fullmatch(r"\d+(?:\.\d+)?_\w+", v):
             raise ValueError(
                 f"term must be in '{{number}}_{{units}}' format, got '{v}'"
             ) from None
