@@ -1,5 +1,5 @@
 """
-Package exports for the NDA preprocessing pipeline.
+Package exports for the Kleister NDA preparation and delivery pipeline.
 """
 
 from . import label_transformer, utils
