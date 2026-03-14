@@ -1,7 +1,7 @@
 # Kleister NDA: Dataset Preparation for LLM-based KIE
 
-[![CI](https://github.com/gafnts/kleister-nda-preprocessing/actions/workflows/ci.yaml/badge.svg)](https://github.com/gafnts/kleister-nda-preprocessing/actions/workflows/ci.yaml)
-[![codecov](https://codecov.io/gh/gafnts/kleister-nda-preprocessing/branch/master/graph/badge.svg)](https://codecov.io/gh/gafnts/kleister-nda-preprocessing)
+[![CI](https://github.com/gafnts/kleister-nda-preparation/actions/workflows/ci.yaml/badge.svg)](https://github.com/gafnts/kleister-nda-preparation/actions/workflows/ci.yaml)
+[![codecov](https://codecov.io/gh/gafnts/kleister-nda-preparation/branch/master/graph/badge.svg)](https://codecov.io/gh/gafnts/kleister-nda-preparation)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 A Python package for preparing and delivering the [Kleister NDA](https://github.com/applicaai/kleister-nda) dataset for multimodal Key Information Extraction (KIE) tasks using large language models in a serverless processing context.
@@ -35,7 +35,7 @@ The package requires Python 3.13 or later. Dependencies are managed with [uv](ht
 To use this package in your own project without cloning the repository, add it directly from GitHub:
 
 ```bash
-uv add git+https://github.com/gafnts/kleister-nda-preprocessing
+uv add git+https://github.com/gafnts/kleister-nda-preparation
 ```
 
 Then run the pipeline with a target output directory:
@@ -55,8 +55,8 @@ uv remove nda
 Clone the repository and install the package with all dependencies (including dev tools):
 
 ```bash
-git clone https://github.com/gafnts/kleister-nda-preprocessing.git
-cd kleister-nda-preprocessing
+git clone https://github.com/gafnts/kleister-nda-preparation.git
+cd kleister-nda-preparation
 make install
 ```
 

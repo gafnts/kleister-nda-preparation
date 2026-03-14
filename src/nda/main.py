@@ -105,7 +105,7 @@ def main() -> None:
     store_parquets(dataframes, args.output_dir)
 
     logger.info("The preparation has completed")
-    logger.info(f"Data is available in: {args.output_dir}")
+    logger.info("Data is available in: %s", args.output_dir)
 
 
 if __name__ == "__main__":
