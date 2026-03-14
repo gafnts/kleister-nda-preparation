@@ -51,11 +51,16 @@ jobs:
         run: uv sync --dev --frozen
 
       - name: Run tests
-        run: uv run pytest --cov --cov-report=xml -v
+        run: uv run pytest --cov --cov-branch --cov-report=xml
 
       - name: Archive code coverage results
         uses: actions/upload-artifact@v6
         with:
           name: code-coverage-report
           path: coverage.xml
-          retention-days: 14
+          retention-days: 5
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
