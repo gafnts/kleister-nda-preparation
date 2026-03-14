@@ -14,12 +14,6 @@ The pipeline reads the original dataset partitions, transforms raw TSV labels in
 - [Running the preparation and delivery pipeline](#running-the-preparation-and-delivery-pipeline)
 - [Output structure](#output-structure)
 - [NDA schema](#nda-schema)
-- [Project structure](#project-structure)
-- [Development](#development)
-  - [Linting and formatting](#linting-and-formatting)
-  - [Type checking](#type-checking)
-  - [Testing](#testing)
-  - [Continuous integration](#continuous-integration)
 - [Original dataset documentation](#original-dataset-documentation)
   - [Evaluation](#evaluation)
   - [Directory structure](#directory-structure)
@@ -50,6 +44,12 @@ Then run the pipeline with a target output directory:
 uv run nda --output_dir ./
 ```
 
+Since this package serves a one-time preparation purpose, you can remove it from your project after the pipeline has run:
+
+```bash
+uv remove nda
+```
+
 ### For development
 
 Clone the repository and install the package with all dependencies (including dev tools):
@@ -72,13 +72,7 @@ uv sync --no-dev
 
 ## Running the preparation and delivery pipeline
 
-The package exposes a single CLI entry point that executes the full pipeline:
-
-```bash
-uv run nda
-```
-
-Pass `--output_dir` to choose where the prepared outputs are delivered (defaults to `src/nda/static/outputs/`):
+The package exposes a single CLI entry point that executes the full pipeline. Pass `--output_dir` to choose where the prepared outputs are delivered (defaults to `src/nda/static/outputs/`):
 
 ```bash
 uv run nda --output_dir ./
@@ -86,10 +80,10 @@ uv run nda --output_dir ./
 
 The pipeline performs the following steps in sequence:
 
-1. **Load** — reads the compressed TSV input files and, where available, the corresponding `expected.tsv` label files for each partition (`train`, `dev-0`, `test-A`).
-2. **Transform** — parses the raw label strings into structured dictionaries validated against the `NDA` Pydantic model, which is the official schema of the extraction task.
-3. **Relocate** — copies each partition's PDF documents from the shared `documents/` directory into the corresponding partition output directory.
-4. **Store** — serialises each partition's DataFrame as a gzip-compressed Parquet file.
+1. **Load**: Reads the compressed TSV input files and, where available, the corresponding `expected.tsv` label files for each partition (`train`, `dev-0`, `test-A`).
+2. **Transform**: Parses the raw label strings into structured dictionaries validated against the `NDA` Pydantic model, which is the official schema of the extraction task.
+3. **Relocate**: Copies each partition's PDF documents from the shared `documents/` directory into the corresponding partition output directory.
+4. **Store**: Serialises each partition's DataFrame as a gzip-compressed Parquet file.
 
 ---
 
