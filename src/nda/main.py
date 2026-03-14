@@ -1,6 +1,10 @@
 """
-Entry point for the NDA preprocessing pipeline.
-Prepares the Kleister NDA dataset for multimodal KIE tasks with LLMs.
+Entry point for the preprocessing pipeline.
+Prepares and delivers the Kleister NDA dataset for multimodal KIE tasks, in such a way that:
+- Loads raw data for all partitions
+- Parses ground truth labels into a validated schema
+- Relocates source documents into an output directory, organized by partition
+- Persists processed dataframes as parquet files in each output partition directory
 """
 
 import argparse
@@ -26,12 +30,15 @@ PARTITIONS: tuple[Partition, ...] = ("train", "dev-0", "test-A")
 
 
 def parse_args() -> argparse.Namespace:
+    """
+    Deliver the preprocessed dataset to a specified output directory.
+    """
     parser = argparse.ArgumentParser(description="Run the NDA preprocessing pipeline.")
     parser.add_argument(
-        "--output-dir",
+        "--output_dir",
         type=Path,
         default=OUTPUT_DIR,
-        help="Directory where processed outputs are written (default: %(default)s).",
+        help=f"Directory where processed outputs are written (default: {OUTPUT_DIR}).",
     )
     return parser.parse_args()
 
@@ -89,27 +96,25 @@ def main() -> None:
     """
     Run the full NDA preprocessing pipeline end-to-end.
     Produces processed parquets and relocated documents
-    ordered by partition in the output directory.
+    ordered by partition in the specified output directory.
     """
+    logger.info("Starting the NDA preprocessing pipeline")
     args = parse_args()
-    output_dir: Path = args.output_dir
 
-    logger.info("Starting main pipeline")
-    logger.info("Output directory: %s", output_dir)
-
-    logger.info("Execute data loading")
+    logger.info("1. Data loading")
     dataframes = load_data()
 
-    logger.info("Execute label parsing")
+    logger.info("2. Label parsing")
     dataframes = parse_labels(dataframes)
 
-    logger.info("Execute document relocation")
-    relocate_documents(dataframes, output_dir)
+    logger.info("3. Document relocation")
+    relocate_documents(dataframes, args.output_dir)
 
-    logger.info("Execute parquet file storage")
-    store_parquets(dataframes, output_dir)
+    logger.info("4. Parquet file storage")
+    store_parquets(dataframes, args.output_dir)
 
-    logger.info("Pipeline completed")
+    logger.info("Pipeline completed.")
+    logger.info(f"Data is available in: {args.output_dir}")
 
 
 if __name__ == "__main__":
