@@ -49,6 +49,18 @@ class TestParty:
         p = Party(name="Acme")
         assert p.name == "Acme"
 
+    def test_commas_are_stripped(self) -> None:
+        p = Party(name="Acme, Inc.")
+        assert p.name == "Acme_Inc."
+
+    def test_curly_single_quotes_normalized(self) -> None:
+        p = Party(name="O\u2019Brien\u2018s")
+        assert p.name == "O'Brien's"
+
+    def test_curly_double_quotes_normalized(self) -> None:
+        p = Party(name="\u201cAcme\u201d")
+        assert p.name == '"Acme"'
+
 
 class TestEffectiveDate:
     def test_defaults_to_none(self) -> None:
@@ -96,6 +108,18 @@ class TestJurisdiction:
     def test_already_clean_value_unchanged(self) -> None:
         nda = NDA(jurisdiction="California")
         assert nda.jurisdiction == "California"
+
+    def test_state_of_prefix_stripped(self) -> None:
+        nda = NDA(jurisdiction="State of New York")
+        assert nda.jurisdiction == "New_York"
+
+    def test_commonwealth_of_prefix_stripped(self) -> None:
+        nda = NDA(jurisdiction="Commonwealth of Virginia")
+        assert nda.jurisdiction == "Virginia"
+
+    def test_no_prefix_left_unchanged(self) -> None:
+        nda = NDA(jurisdiction="Delaware")
+        assert nda.jurisdiction == "Delaware"
 
 
 class TestTerm:

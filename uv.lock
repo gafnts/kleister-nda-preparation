@@ -444,7 +444,6 @@ wheels = [
 
 [[package]]
 name = "nda"
-version = "0.1.2"
 source = { editable = "." }
 dependencies = [
     { name = "pandas" },
