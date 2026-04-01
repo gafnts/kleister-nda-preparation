@@ -31,37 +31,6 @@ class NDA(BaseModel):
     General formatting rules:
     * In all attribute values, replace spaces ` ` and colons `:` with underscores `_`.
     * If an attribute is not present or cannot be determined from the document, return `null`.
-
-    Field-specific guidance:
-
-    effective_date:
-    * Return in `YYYY-MM-DD` format.
-    * Use the date explicitly stated as the effective or execution date of the agreement.
-    * If no explicit effective date is stated, use the latest signature date (i.e., the
-      date on which the last party signed, making the agreement fully executed).
-    * Do NOT use individual signature dates when an explicit effective date is stated
-      elsewhere in the agreement text.
-
-    jurisdiction:
-    * Return only the state or country name (e.g., `New_York`, `Delaware`, `Florida`).
-    * Do NOT include prefixes such as "State of" or "Commonwealth of".
-
-    party:
-    * Use the short legal entity name as written in the agreement
-      (e.g., `Nike_Inc.` not `NIKE_Inc._divisions_subsidiaries_and_affiliates`).
-    * Do NOT include parenthetical descriptions (e.g., drop
-      `_(An_Electric_Membership_Corporation)`), subsidiary clauses, or affiliate lists.
-    * Do NOT use role labels such as "Recipient", "Disclosing Party", "Company", or
-      "Employee" as party names. If a party's actual name is not stated, omit that party.
-
-    term:
-    * Extract ONLY the overall fixed duration of the agreement itself.
-    * Do NOT extract durations of individual obligations such as confidentiality survival
-      periods, non-compete restricted periods, non-solicitation periods, or other sub-clauses.
-    * If the agreement is terminable at will, on notice, or tied to the duration of
-      employment with no independent fixed end date, return `null`.
-    * Normalize with original units: e.g., `eleven months` → `11_months`.
-      Format: `{number}_{units}`.
     """
 
     effective_date: str | None = Field(
@@ -69,29 +38,42 @@ class NDA(BaseModel):
         description=(
             "Date in `YYYY-MM-DD` format at which point the contract becomes legally "
             "binding. Use the explicitly stated effective date; if none is stated, use "
-            "the latest signature date."
+            "the latest signature date (i.e., the date on which the last party signed, "
+            "making the agreement fully executed). Do NOT use individual signature dates "
+            "when an explicit effective date is stated elsewhere in the agreement text."
         ),
     )
     jurisdiction: str | None = Field(
         None,
         description=(
             "The state or country under whose laws the contract is governed. "
-            "Return only the name (e.g., `New_York`), not `State_of_New_York`."
+            "Return only the name (e.g., `New_York`, `Delaware`, `Florida`). "
+            "Do NOT include prefixes such as `State_of_` or `Commonwealth_of_`."
         ),
     )
     party: list[Party] = Field(
         default_factory=list,
         description=(
-            "Named parties to the contract. Use short legal entity names only. "
-            "Omit role labels and parties whose actual name is not stated."
+            "Named parties to the contract. Use the short legal entity name as written "
+            "in the agreement (e.g., `Nike_Inc.` not "
+            "`NIKE_Inc._divisions_subsidiaries_and_affiliates`). Do NOT include "
+            "parenthetical descriptions (e.g., drop `_(An_Electric_Membership_Corporation)`), "
+            "subsidiary clauses, or affiliate lists. Do NOT use role labels such as "
+            "`Recipient`, `Disclosing_Party`, `Company`, or `Employee` as party names. "
+            "If a party's actual name is not stated, omit that party."
         ),
     )
     term: str | None = Field(
         None,
         description=(
             "Overall fixed duration of the agreement itself (e.g., `2_years`). "
-            "Do NOT extract sub-clause durations such as confidentiality survival "
-            "periods or non-compete restricted periods. Return `null` if no fixed term."
+            "Extract ONLY the agreement-level term. Do NOT extract durations of "
+            "individual obligations such as confidentiality survival periods, "
+            "non-compete restricted periods, or non-solicitation periods. "
+            "If the agreement is terminable at will, on notice, or tied to the "
+            "duration of employment with no independent fixed end date, return `null`. "
+            "Normalize with original units: e.g., `eleven months` → `11_months`. "
+            "Format: `{number}_{units}`."
         ),
     )
 
