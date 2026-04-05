@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 
 
 DATA_DIR: Path = Path(__file__).parent / "static" / "data"
-OUTPUT_DIR: Path = Path(__file__).parent / "static" / "outputs"
+OUTPUT_DIR: Path = Path().cwd() / "data"
 PARTITIONS: tuple[Partition, ...] = ("train", "dev-0", "test-A")
 
 
