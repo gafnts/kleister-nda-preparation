@@ -22,6 +22,7 @@ The pipeline reads the original dataset partitions, transforms raw TSV labels in
   - [Information to be extracted](#information-to-be-extracted)
   - [Normalization](#normalization)
   - [Format of the output files for test sets](#format-of-the-output-files-for-test-sets)
+- [Contributing](#contributing)
 - [Sources](#sources)
 
 ---
@@ -30,52 +31,26 @@ The pipeline reads the original dataset partitions, transforms raw TSV labels in
 
 The package requires Python 3.13 or later. Dependencies are managed with [uv](https://docs.astral.sh/uv/).
 
-### As a dependency
-
-To use this package in your own project without cloning the repository, add it directly from GitHub:
+To use this package in your own project, add it as a dependency directly from GitHub:
 
 ```bash
 uv add git+https://github.com/gafnts/kleister-nda-preparation
-```
-
-Then run the pipeline with a target output directory:
-
-```bash
-uv run nda --output_dir ./
-```
-
-Since this package serves a one-time preparation purpose, you can remove it from your project after the pipeline has run:
-
-```bash
-uv remove nda
-```
-
-### For development
-
-Clone the repository and install the package with all dependencies (including dev tools):
-
-```bash
-git clone https://github.com/gafnts/kleister-nda-preparation.git
-cd kleister-nda-preparation
-make install
-```
-
-Use `make install` to sync dependencies and set up pre-commit hooks (both `pre-commit` and `pre-push`).
-
-To install without development dependencies:
-
-```bash
-uv sync --no-dev
 ```
 
 ---
 
 ## Running the preparation and delivery pipeline
 
-The package exposes a single CLI entry point that executes the full pipeline. Pass `--output_dir` to choose where the prepared outputs are delivered (defaults to `src/nda/static/outputs/`):
+The package exposes a single CLI entry point that executes the full pipeline. By default, outputs are delivered to a `data/` folder in the current working directory:
 
 ```bash
-uv run nda --output_dir ./
+uv run nda
+```
+
+Pass `--output_dir` to override the destination:
+
+```bash
+uv run nda --output_dir /path/to/output
 ```
 
 The pipeline performs the following steps in sequence:
@@ -84,6 +59,12 @@ The pipeline performs the following steps in sequence:
 2. **Transform**: Parses the raw label strings into structured dictionaries validated against the `NDA` Pydantic model, which is the official schema of the extraction task.
 3. **Relocate**: Copies each partition's PDF documents from the shared `documents/` directory into the corresponding partition output directory.
 4. **Store**: Serialises each partition's DataFrame as a gzip-compressed Parquet file.
+
+Since this package serves a one-time preparation purpose, you can remove it from your project after the pipeline has run:
+
+```bash
+uv remove nda
+```
 
 ---
 
@@ -234,6 +215,12 @@ Not every document contains all four attributes. Keys with no corresponding valu
 ### Format of the output files for test sets
 
 The output format matches `expected.tsv`: a list of `key=value` pairs, one document per line, sorted alphabetically by key. The order of pairs within a line does not matter. Multiple values for the same key (e.g. multiple parties) appear as separate `key=value` tokens on the same line.
+
+---
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup, available Make targets, and CI details.
 
 ---
 

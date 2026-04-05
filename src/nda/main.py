@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 
 
 DATA_DIR: Path = Path(__file__).parent / "static" / "data"
-OUTPUT_DIR: Path = Path().cwd() / "data"
+OUTPUT_DIR: Path = Path.cwd() / "data"
 PARTITIONS: tuple[Partition, ...] = ("train", "dev-0", "test-A")
 
 
@@ -39,7 +39,7 @@ def parse_args() -> argparse.Namespace:
         "--output_dir",
         type=Path,
         default=OUTPUT_DIR,
-        help=f"Directory where prepared outputs are delivered (default: {OUTPUT_DIR}).",
+        help="Directory where prepared outputs are delivered (default: ./data).",
     )
     return parser.parse_args()
 
