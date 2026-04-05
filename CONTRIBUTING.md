@@ -36,3 +36,14 @@ GitHub Actions runs two sequential jobs on every push and pull request to `maste
 2. **`test`**: runs `pytest` with branch coverage and uploads the `coverage.xml` report to Codecov.
 
 Coverage is enforced at 95%.
+
+## Releasing
+
+Releases are driven by git tags. The package version is derived automatically from the tag via [hatch-vcs](https://github.com/ofek/hatch-vcs), so no manual version bumps are needed.
+
+To cut a new release, push a version tag from `main`:
+
+```bash
+git tag v1.2.3
+git push origin v1.2.3
+```
