@@ -1,7 +1,7 @@
-.PHONY: install
+.PHONY: install lint format type check test
 
 install:
-	uv sync
+	uv sync --all-groups --all-extras
 	uv run pre-commit install
 	uv run pre-commit install --hook-type pre-push
 
